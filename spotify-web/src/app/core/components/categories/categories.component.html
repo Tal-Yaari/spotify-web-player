@@ -1,0 +1,14 @@
+<section class="mainSection">
+    <div class="containerFluid">
+        <h2 class="title">
+            Browse all
+        </h2>
+        <ul class="categoriesList" *ngIf="categoriesList">
+            <li class="categoriesList__item" *ngFor="let category of categoriesList; index as i">
+                <a [routerLink]="['/category/' + category.id]" class="categoriesList__link"  style="background-image:url({{category.icons[0].url}})">
+                    <h3 class="categoriesList__topic">{{category.name}}</h3>
+                </a>
+            </li>
+        </ul>
+    </div>
+</section>

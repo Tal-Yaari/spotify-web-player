@@ -1,0 +1,23 @@
+
+
+@import './reset.scss';
+
+$fontLight: 'RobotoLight';
+$fontRegular: 'RobotoRegular';
+$fontBold: 'RobotoBold';
+
+$colorBlack: #000;
+$mainBgBlack: #181818;
+$lightBlack: #282828;
+$colorWhite: #fff;
+$colorGrayWhite: #b3b3b3;
+$colorGreen: #1db954;
+
+$screenSm: 768px;
+$screenLg: 992px;
+$screenXl: 1200px;
+$screenXXl: 1600px;
+
+@mixin transitionMove {
+    transition: linear all .3s;
+}
