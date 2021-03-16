@@ -1,51 +1,37 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpEvent, HttpHeaders } from '@angular/common/http';
 
-//importar map reactive extentions
-import { map } from "rxjs/operators";
-
-// Por lo general cuando se trabaja con API
-// Es necesario Centralizar la Informacion por eso este Service
-
-// Este servicio se va a poder Inyectar en otros Componentes
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
-export class SpotifyService {
-  constructor(private http: HttpClient) {
-  }
+export class AuthTokenService {
+  client_id = 'cf6854fe87b6471e8c5dc3ac3e0dfd56';
+  client_secret = 'b20c7daf47984966bc52cd609371f55b';
 
-  getQuery(query: string) {
-    const url = `https://api.spotify.com/v1/${query}`;
+  constructor(private http: HttpClient) {}
 
-    const headers = new HttpHeaders({
-      Authorization:
-        "Bearer BQB_uovFmDgS3xbloI1OeLQCHYPVzBLDsZCr3LMMd69FsIkgcCAsn1VfoyD3lqaWH7eJA5x9XynVSGWSkn4"
+  static authToken: string = '';
+
+  authenticate(force: boolean): Promise<string> {
+    if (AuthTokenService.authToken != '' && !force) {
+      return Promise.resolve(AuthTokenService.authToken);
+    }
+
+    let headers = new HttpHeaders({
+      Authorization: 'Basic ' + btoa(this.client_id + ':' + this.client_secret),
+      'Content-Type': 'application/x-www-form-urlencoded',
     });
 
-    return this.http.get(url, { headers });
-  }
-
-  getNewReleases() {
-    return this.getQuery("browse/new-releases?limit=20").pipe(
-      map(data => data["albums"].items)
-    );
-  }
-
-  getArtistas(termino: string) {
-    return this.getQuery(`search?q=${termino}&type=artist&limit=15`).pipe(
-      map(data => data["artists"].items)
-    );
-  }
-
-  getArtista(id: string) {
-    return this.getQuery(`artists/${id}`);
-    // .pipe( map( data => data['artists'].items));
-  }
-
-  getTopTracks(id: string) {
-    return this.getQuery(`artists/${id}/top-tracks?country=us`).pipe(
-      map(data => data["tracks"])
-    );
+    let params: URLSearchParams = new URLSearchParams();
+    params.set('grant_type', 'client_credentials');
+    let body = params.toString();
+    return this.http
+      .post('https://accounts.spotify.com/api/token', body, {
+        headers: headers,
+      }).toPromise().then((res: any) => {
+        console.log('res', res);
+        AuthTokenService.authToken = res.access_token;
+        return res.access_token;
+      });
   }
 }

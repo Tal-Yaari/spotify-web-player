@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Categories } from '../../interfaces/interfaces';
 import { ApiService } from '../../services/api-service.service';
-import { SpotifyService } from '../../services/spotify.service';
+import { AuthTokenService } from '../../services/spotify.service';
 
 @Component({
   selector: 'categories',
@@ -11,9 +11,10 @@ import { SpotifyService } from '../../services/spotify.service';
 export class CategoriesComponent implements OnInit {
   categoriesList: Categories;
 
-  constructor(private apiService: ApiService, private spotifyServive: SpotifyService) { }
+  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
+
     this.apiService.get('/browse/categories').then((res:any) => {
       console.log(res);
       this.categoriesList = res.categories.items;

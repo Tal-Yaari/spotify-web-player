@@ -1,31 +1,38 @@
 <section *ngIf="categoryData" class="bannerTitleSection">
-    <div class="containerFluid">
-        <h1 class="maintitle">
-            {{categoryData.name}}
-        </h1>
-    </div>
+  <div class="containerFluid">
+    <h1 class="maintitle">
+      {{ categoryData.name }}
+    </h1>
+  </div>
 </section>
 
 <section *ngIf="categoryData" class="mainSection">
-    <div class="containerFluid">
-        <h2 class="title">
-            <a [routerLink] class="titleLink">
-                Popular playlists
-            </a>
-        </h2>
-        <ul class="playlist" *ngIf="categoryPlaylist">
-            <li class="playlist__item" *ngFor="let playlist of categoryPlaylist; index as i">
-                <a [routerLink]="playlist.id" class="playlist__link" >
-                    <div class="playlist__picContainer">
-                    <img src="{{playlist.images[0].url}}" alt="" class="playlist__pic">
-                    <button class="playlist__playBtn">
-                        <span class="triangle"></span>
-                    </button>
-                </div>
-                    <h3 class="playlist__topic">{{playlist.name}}</h3>
-                    <p class="playlist__description">{{playlist.description}}</p>
-                </a>
-            </li>
-        </ul>
-    </div>
+  <div class="containerFluid">
+    <h2 class="title">
+      <a [routerLink] class="titleLink"> Popular playlists </a>
+    </h2>
+    <ul class="playlist" *ngIf="categoryPlaylist">
+      <li
+        class="playlist__item"
+        *ngFor="let playlist of categoryPlaylist; index as i"
+      >
+        <div class="playlist__link" (click)="goToPlaylist(playlist.id)">
+          <div class="playlist__picContainer">
+            <img
+              src="{{ playlist.images[0].url }}"
+              alt=""
+              class="playlist__pic"
+            />
+            <div class="playlist__playBtnContainer">
+              <button class="playlist__playBtn">
+                <span class="triangle"></span>
+              </button>
+            </div>
+          </div>
+          <h3 class="playlist__topic">{{ playlist.name }}</h3>
+          <p class="playlist__description">{{ playlist.description }}</p>
+        </div>
+      </li>
+    </ul>
+  </div>
 </section>

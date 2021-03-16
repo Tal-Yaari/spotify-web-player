@@ -1,0 +1,100 @@
+<section *ngIf="playlistData" class="bannerTitleSection">
+  <div class="containerFluid">
+    <div class="topContent">
+      <div class="picWrapper">
+        <img
+          class="pic"
+          *ngIf="
+            playlistData && playlistData.images && playlistData.images.length
+          "
+          src="{{ playlistData.images[0].url }}"
+          alt=""
+        />
+      </div>
+      <div class="contentWrapper">
+        <span class="contentType">{{ playlistData.type }}</span>
+        <h1 class="maintitle">
+          {{ playlistData.name }}
+        </h1>
+        <div class="description">{{ playlistData.description }}</div>
+        <div class="details">
+          <a
+            class="link"
+            *ngIf="
+              playlistData &&
+              playlistData.owner &&
+              playlistData.owner.external_urls
+            "
+            href="{{ playlistData.owner.external_urls.spotify }}"
+          >
+            {{ playlistData.owner.display_name }}
+          </a>
+          <span class="likes dot">
+            {{ playlistData.followers.total.toLocaleString() }} likes
+          </span>
+          <span class="totalAndTime dot">
+            {{ playlistData.tracks.total }} songs,
+            {{ durationHr }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section *ngIf="playlistDataTracks" class="mainSection">
+  <div class="containerFluid">
+    <table mat-table [dataSource]="playlistDataTracks" class="tracksTable">
+      <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="number">
+        <th mat-header-cell *matHeaderCellDef>#</th>
+        <td mat-cell *matCellDef="let song">{{ i }}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef>TITLE</th>
+        <td mat-cell *matCellDef="let song">
+            <div class="titleWrapper">
+                <img class="pic" src="{{song.track.album.images[2].url}}"  alt="">
+                <div class="innerText">
+            <span class="songName text">{{ song.track.name }}</span>
+            <span class="artist text">{{ song.track.artists[0].name }}</span>
+        </div>
+        </div>
+        </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="album">
+        <th mat-header-cell *matHeaderCellDef>ALBUM</th>
+        <td mat-cell *matCellDef="let song">
+            <span class="text">{{ song.track.album.name }}</span></td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="duration">
+        <th mat-header-cell *matHeaderCellDef>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path
+              d="M7.999 3H6.999V7V8H7.999H9.999V7H7.999V3ZM7.5 0C3.358 0 0 3.358 0 7.5C0 11.642 3.358 15 7.5 15C11.642 15 15 11.642 15 7.5C15 3.358 11.642 0 7.5 0ZM7.5 14C3.916 14 1 11.084 1 7.5C1 3.916 3.916 1 7.5 1C11.084 1 14 3.916 14 7.5C14 11.084 11.084 14 7.5 14Z"
+              fill="currentColor"
+            ></path>
+          </svg>
+        </th>
+        <td mat-cell *matCellDef="let song">
+            <span class="text">{{ song.track.duration_Time }}
+            </span>
+            </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = dataIndex"></tr>
+    </table>
+
+ 
+  </div>
+</section>
