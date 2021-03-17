@@ -9,6 +9,7 @@ const routes: Routes = [
   { path: 'categories', component: CategoriesComponent,},
   { path: 'category/:categoryId', component: CategoryComponent},
   { path: 'playlist/:playlistId', component: PlaylistComponent},
+  { path: '', redirectTo:'/categories', pathMatch: 'full'},
   // {path: 'search', component: CategoriesComponent},
   // {path: "yourLibrary", component: }
 ];

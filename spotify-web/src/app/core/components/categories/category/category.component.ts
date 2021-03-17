@@ -9,7 +9,11 @@ import { ApiService } from 'src/app/core/services/api-service.service';
   styleUrls: ['./category.component.scss'],
 })
 export class CategoryComponent implements OnInit {
-  constructor(private route: ActivatedRoute, private apiService: ApiService, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private apiService: ApiService,
+    private router: Router
+  ) {}
   categoryData: Categories;
   categoryPlaylist: Playlist[];
 
@@ -17,7 +21,6 @@ export class CategoryComponent implements OnInit {
     this.apiService
       .get(`/browse/categories/${this.route.snapshot.params.categoryId}`)
       .then((res: Categories) => {
-        console.log(res);
         this.categoryData = res;
 
         this.apiService
@@ -25,9 +28,18 @@ export class CategoryComponent implements OnInit {
             `/browse/categories/${this.route.snapshot.params.categoryId}/playlists?limit=8`
           )
           .then((res: any) => {
-            console.log(res.playlists);
             this.categoryPlaylist = res.playlists.items;
-          });
+          },
+          (error) => {
+            if (error.statusCode == 404) {
+              this.router.navigateByUrl('/categories');
+            }
+          })
+      },
+      (error) => {
+        if (error && error.status == 404) {
+          this.router.navigateByUrl('/categories');
+        }
       });
   }
 

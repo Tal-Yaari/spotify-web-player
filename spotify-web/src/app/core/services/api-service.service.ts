@@ -43,7 +43,7 @@ export class ApiService {
               return Promise.resolve(data);
             },
             (error) => {
-              if(error.statusCode == 401) {
+              if(error.status == 401) {
                 return this.getHeaders(true).then(res => {
                   if(tryNum < 5) {
                     return this.internalPut(url, tryNum + 1);
@@ -72,7 +72,7 @@ export class ApiService {
               return Promise.resolve(data);
             },
             (error) => {
-              if(error.statusCode == 401) {
+              if(error.status == 401) {
                 return this.getHeaders(true).then(res => {
                   if(tryNum < 5) {
                     return this.internalPost(url, tryNum + 1, data);
