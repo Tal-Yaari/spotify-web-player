@@ -1,10 +1,10 @@
 @import "../../../../assets/styles/variables.scss";
 
 :host {
-    width: 230px;
-    height: 100%;
-    flex-shrink: 0;
-  }
+  width: 230px;
+  height: 100%;
+  flex-shrink: 0;
+}
 
 .navbarSection {
   display: flex;
@@ -18,8 +18,8 @@
   background-color: $colorBlack;
 
   .contentContainer {
-      display: flex;
-      flex-direction: column;
+    display: flex;
+    flex-direction: column;
     flex: 1;
     padding: 0 8px;
   }
@@ -124,31 +124,33 @@
     }
 
     &.createPlaylist {
-        .playlistActions__iconContainer {
-            background-color: $colorGrayWhite;
-        }
+      .playlistActions__iconContainer {
+        background-color: $colorGrayWhite;
+      }
 
-      
-        &:hover {
-            .playlistActions__iconContainer {
-                background-color: $colorWhite;
-            }
+      &:hover {
+        .playlistActions__iconContainer {
+          background-color: $colorWhite;
         }
+      }
     }
 
-    
     &.likedSongs {
+      .playlistActions__iconContainer {
+        background: linear-gradient(
+          135deg,
+          rgb(69, 10, 245),
+          rgb(196, 239, 217)
+        );
+        opacity: 0.5;
+      }
+
+      &:hover {
         .playlistActions__iconContainer {
-            background: linear-gradient(135deg,rgba(69, 10, 245, 0.5),rgba(196, 239, 217, 0.5));
+         opacity: 1;
         }
-
-        &:hover {
-            .playlistActions__iconContainer {
-                background: linear-gradient(135deg,rgba(69, 10, 245, 1),rgba(196, 239, 217, 1));
-            }
-        }
-
-}
+      }
+    }
   }
 
   &__iconContainer {
@@ -160,13 +162,22 @@
     @include transitionMove();
   }
 
-  &__icon {
-    max-width: 24px;
+  .likedSongs {
+    path {
+      fill: $colorWhite;
+      @include transitionMove();
+    }
+  }
 
+  .createPlaylist {
     path {
       fill: $colorBlack;
       @include transitionMove();
     }
+  }
+
+  &__icon {
+    max-width: 24px;
   }
 
   &__text {

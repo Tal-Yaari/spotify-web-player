@@ -1,24 +1,55 @@
-@import './variables.scss';
+@import "./variables.scss";
 
 body {
   background-color: $mainBgBlack;
 
-    * {
-        font-family: $fontRegular;
-    }
+  * {
+    font-family: $fontRegular;
+  }
 }
 
-
 .mainSection {
-    .containerFluid {
-      padding: 16px;
-      margin: 0 auto;
+  .containerFluid {
+    padding: 16px;
+    margin: 0 auto;
+  }
+
+  .title {
+    font-size: 24rem;
+    font-family: $fontBold;
+    color: $colorWhite;
+    margin: 16px 0;
+  }
+}
+
+.playBtnContainer {
+  @include transitionMove();
+
+  &__playBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    z-index: 8;
+    background-color: $colorGreen;
+    border-radius: 50%;
+    outline: none;
+    border: none;
+    @include transitionMove();
+
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 2px 1px rgba(0, 0, 0, 1);
+      @include transitionMove();
     }
-  
-    .title {
-      font-size: 24rem;
-      font-family: $fontBold;
-      color: $colorWhite;
-      margin: 16px 0;
+
+    .triangle {
+      display: inline-block;
+      border-top: 10px solid $colorWhite;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      transform: rotate(-90deg);
     }
   }
+}

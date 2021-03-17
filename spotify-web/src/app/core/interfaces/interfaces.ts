@@ -51,6 +51,7 @@ export interface Tracks {
 
 export interface TracksArr {
   added_at: Date;
+  addedAt?: string;
   added_by: {
     external_urls: ExternalUrls;
     href: string;

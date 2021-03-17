@@ -29,20 +29,62 @@ export class ApiService {
     );
   }
 
-  public post(url: string, data: any) {
-    return this.http
-      .post(this.apiUrl + url, data)
-      .pipe(
-        tap(
-          (data) => {
-            return Promise.resolve(data);
-          },
-          (error) => {
-            return Promise.reject(data);
-          }
+  public put(url: string) {
+    return this.internalPut(url, 1);
+  }
+
+  private internalPut(url: string, tryNum: number) {
+    return this.getHeaders(false).then(headers => {
+      return this.http
+        .put(this.apiUrl + url, {headers: headers})
+        .pipe(
+          tap(
+            (data) => {
+              return Promise.resolve(data);
+            },
+            (error) => {
+              if(error.statusCode == 401) {
+                return this.getHeaders(true).then(res => {
+                  if(tryNum < 5) {
+                    return this.internalPut(url, tryNum + 1);
+                  }
+                });
+              }
+              return Promise.reject();
+            }
+          )
         )
-      )
-      .toPromise();
+        .toPromise();
+      })
+  }
+
+  public post(url: string, data: any) {
+    return this.internalPost(url, 1, data);
+  }
+
+  private internalPost(url: string, tryNum: number, data: any) {
+    return this.getHeaders(false).then(headers => {
+      return this.http
+        .post(this.apiUrl + url, data, {headers: headers})
+        .pipe(
+          tap(
+            (data) => {
+              return Promise.resolve(data);
+            },
+            (error) => {
+              if(error.statusCode == 401) {
+                return this.getHeaders(true).then(res => {
+                  if(tryNum < 5) {
+                    return this.internalPost(url, tryNum + 1, data);
+                  }
+                });
+              }
+              return Promise.reject();
+            }
+          )
+        )
+        .toPromise();
+      })
   }
 
   public get(url: string) {
@@ -73,7 +115,4 @@ export class ApiService {
         .toPromise();
       })
   }
-  
-
-  getAuth = () => {};
 }

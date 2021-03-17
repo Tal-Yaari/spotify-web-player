@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpEvent, HttpHeaders } from '@angular/common/http';
+import {SpotifyLogin} from '../enum/enum';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthTokenService {
-  client_id = 'cf6854fe87b6471e8c5dc3ac3e0dfd56';
-  client_secret = 'b20c7daf47984966bc52cd609371f55b';
 
   constructor(private http: HttpClient) {}
 
@@ -18,7 +17,7 @@ export class AuthTokenService {
     }
 
     let headers = new HttpHeaders({
-      Authorization: 'Basic ' + btoa(this.client_id + ':' + this.client_secret),
+      Authorization: 'Basic ' + btoa(SpotifyLogin.CLIENTID + ':' + SpotifyLogin.CLIENTSECRET),
       'Content-Type': 'application/x-www-form-urlencoded',
     });
 

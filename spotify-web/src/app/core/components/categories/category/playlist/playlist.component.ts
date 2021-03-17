@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Playlist, TracksArr } from 'src/app/core/interfaces/interfaces';
 import { ApiService } from 'src/app/core/services/api-service.service';
+import { PlaylistServiceService } from './playlist-service.service';
 
 @Component({
   selector: 'app-playlist',
@@ -12,13 +13,20 @@ export class PlaylistComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiService,
-    private router: Router
+    private router: Router,
+    private playlistServiceService: PlaylistServiceService
   ) {}
   playlistData: Playlist;
   playlistDataTracks: TracksArr[];
   durationMs = 0;
   durationHr;
-  displayedColumns: string[] = ['number', 'title', 'album', 'duration'];
+  displayedColumns: string[] = [
+    'number',
+    'title',
+    'album',
+    'dateAdded',
+    'duration',
+  ];
   dataSource;
 
   ngOnInit(): void {
@@ -31,22 +39,24 @@ export class PlaylistComponent implements OnInit {
         console.log(this.playlistDataTracks);
 
         this.playlistDataTracks.forEach((item: TracksArr) => {
-          item.track.duration_Time = this.convertMsToHours(false,item.track.duration_ms);
+          item.track.duration_Time = this.playlistServiceService.convertMsToHours(
+            false,
+            item.track.duration_ms
+          );
+          item.addedAt = this.playlistServiceService.getDateAdded(item.added_at);
           this.durationMs += item.track.duration_ms;
         });
-        this.convertMsToHours(true,this.durationMs);
+        this.durationHr = this.playlistServiceService.convertMsToHours(true, this.durationMs);
       });
   }
 
-  convertMsToHours(totalTime: boolean,durationMs) {
-    let h, m, s;
-    h = Math.floor(durationMs / 1000 / 60 / 60);
-    m = Math.floor((durationMs / 1000 / 60 / 60 - h) * 60);
-    s = Math.floor(((durationMs/1000/60/60 - h)*60 - m)*60);
-    if(totalTime) {
-      this.durationHr = `${h} hr ${m} min`
-    } else {
-      return `${m}:${s < 10 ? '0' + s : s}`;
-    }
+  likeTracks(tracksId) {
+    // this.apiService
+    // .put(`/me/albums?ids=${tracksId}`)
+    // .then((res: any) => {
+    //   console.log(res);
+    // });
   }
+
+  
 }
