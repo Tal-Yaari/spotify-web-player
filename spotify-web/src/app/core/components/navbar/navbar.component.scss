@@ -48,9 +48,11 @@
     &.active {
       background-color: $lightBlack;
 
-      .navList__icon {
-        path {
-          fill: $colorWhite;
+      ::ng-deep {
+        .navList__icon {
+          path {
+            fill: $colorWhite;
+          }
         }
       }
 
@@ -60,10 +62,12 @@
     }
 
     &:hover {
-      .navList__icon {
-        path {
-          fill: $colorWhite;
-          @include transitionMove();
+      ::ng-deep {
+        .navList__icon {
+          path {
+            fill: $colorWhite;
+            @include transitionMove();
+          }
         }
       }
 
@@ -74,12 +78,14 @@
     }
   }
 
-  &__icon {
-    max-width: 24px;
+  ::ng-deep {
+    .navList__icon {
+      max-width: 24px;
 
-    path {
-      fill: $colorGrayWhite;
-      @include transitionMove();
+      path {
+        fill: $colorGrayWhite;
+        @include transitionMove();
+      }
     }
   }
 
@@ -147,7 +153,7 @@
 
       &:hover {
         .playlistActions__iconContainer {
-         opacity: 1;
+          opacity: 1;
         }
       }
     }
@@ -163,21 +169,28 @@
   }
 
   .likedSongs {
-    path {
-      fill: $colorWhite;
-      @include transitionMove();
+    ::ng-deep {
+      path {
+        fill: $colorWhite;
+        @include transitionMove();
+      }
     }
   }
 
   .createPlaylist {
-    path {
-      fill: $colorBlack;
-      @include transitionMove();
+    ::ng-deep {
+      path {
+        fill: $colorBlack;
+        @include transitionMove();
+      }
     }
   }
 
-  &__icon {
-    max-width: 24px;
+  ::ng-deep {
+    .playlistActions__icon {
+      max-width: 24px;
+      width: 100%;
+    }
   }
 
   &__text {

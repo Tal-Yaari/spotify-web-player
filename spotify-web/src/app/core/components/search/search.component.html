@@ -1,0 +1,149 @@
+<section class="mainSection">
+  <div class="containerFluid">
+    <div class="titleWrapper">
+      <h2 class="title">Top Result</h2>
+    </div>
+    <ul class="resultsList">
+      <li class="resultsList__item tracks" *ngIf="resultList?.tracks">
+        <div class="innerTitleWrapper">
+          <h3 class="innerTitle">
+            <a class="titleLink" (click)="searchFor('track')"> Songs </a>
+          </h3>
+          <a
+            class="seeAllBtn"
+            *ngIf="
+              resultList?.tracks?.items.length > 0 &&
+              (type == null ||
+              type == undefined)
+            "
+            (click)="searchFor('track')"
+            >See All</a
+          >
+        </div>
+        <div class="noResult" *ngIf="resultList?.tracks?.items.length == 0">
+          No Result Found...
+        </div>
+        <ul class="tracksList" *ngIf="resultList?.tracks?.items">
+          <li
+            class="tracksList__item"
+            *ngFor="let track of resultList?.tracks?.items; index as i"
+          >
+            <div class="tracksList__link">
+              <div class="tracksList__picContainer">
+                <img
+                  src="{{ track.album.images[2].url }}"
+                  alt=""
+                  class="tracksList__pic"
+                />
+                <button class="playSong">
+                  <span class="triangle"></span>
+                </button>
+              </div>
+              <div class="tracksList__content">
+                <h3 class="tracksList__topic">{{ track.name }}</h3>
+                <a [routerLink]="['/home']" class="tracksList__description">{{
+                  track.artists[0].name
+                }}</a>
+              </div>
+              <div class="tracksList__details">
+                <span class="tracksList__duration">
+                  {{ track.duration_Time }}
+                </span>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </li>
+      <li class="resultsList__item albums" *ngIf="resultList?.albums">
+        <div class="innerTitleWrapper">
+          <h3 class="innerTitle">
+            <a class="titleLink" (click)="searchFor('album')"> Albums </a>
+          </h3>
+          <a
+            [routerLink]="['/']"
+            class="seeAllBtn"
+            *ngIf="
+              resultList?.albums?.items.length > 0 &&
+              (type == null ||
+              type == undefined)
+            "
+            (click)="searchFor('album')"
+            >See All</a
+          >
+        </div>
+        <div class="noResult" *ngIf="resultList?.albums?.items.length == 0">
+          No Result Found...
+        </div>
+        <ul class="playlist" *ngIf="resultList?.albums?.items">
+          <li
+            class="playlist__item"
+            *ngFor="let album of resultList?.albums?.items; index as i"
+          >
+            <div class="playlist__link" (click)="goToAlbum(album.id)">
+              <div class="playlist__picContainer">
+                <img
+                  src="{{ album.images[0].url }}"
+                  alt=""
+                  class="playlist__pic"
+                />
+                <div class="playBtnContainer">
+                  <button class="playBtnContainer__playBtn">
+                    <span class="triangle"></span>
+                  </button>
+                </div>
+              </div>
+              <h3 class="playlist__topic">{{ album.name }}</h3>
+              <p class="playlist__description">{{ album.artists[0].name }}</p>
+            </div>
+          </li>
+        </ul>
+      </li>
+      <li class="resultsList__item playlists" *ngIf="resultList?.playlists">
+        <div class="innerTitleWrapper">
+          <h3 class="innerTitle">
+            <a class="titleLink" (click)="searchFor('playlist')"> Playlists </a>
+          </h3>
+          <a
+            [routerLink]="['/']"
+            class="seeAllBtn"
+            *ngIf="
+              resultList?.playlists?.items.length > 0 &&
+              (type == null ||
+              type == undefined)
+            "
+            (click)="searchFor('playlist')"
+            >See All</a
+          >
+        </div>
+        <div class="noResult" *ngIf="resultList?.playlists?.items.length == 0">
+          No Result Found...
+        </div>
+        <ul class="playlist" *ngIf="resultList?.playlists?.items">
+          <li
+            class="playlist__item"
+            *ngFor="let playlist of resultList?.playlists?.items; index as i"
+          >
+            <div class="playlist__link" (click)="goToPlaylist(playlist.id)">
+              <div class="playlist__picContainer">
+                <img
+                  src="{{ playlist.images[0].url }}"
+                  alt=""
+                  class="playlist__pic"
+                />
+                <div class="playBtnContainer">
+                  <button class="playBtnContainer__playBtn">
+                    <span class="triangle"></span>
+                  </button>
+                </div>
+              </div>
+              <h3 class="playlist__topic">{{ playlist.name }}</h3>
+              <p class="playlist__description">
+                By {{ playlist?.owner?.display_name }}
+              </p>
+            </div>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</section>

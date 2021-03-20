@@ -1,4 +1,4 @@
-@import "../../../../../../assets/styles/variables.scss";
+@import "../../../../assets/styles/variables.scss";
 
 :host {
   flex: 1;
@@ -149,200 +149,6 @@
   }
 }
 
-.tracksTable {
-  background-color: transparent;
-
-  .mat-row,
-  .mat-header-row {
-    display: grid;
-    align-items: center;
-    grid-gap: 16px;
-    padding: 0 16px;
-    grid-template-columns: [index] 24px [first] 6fr [var1] 4fr [var2] 3fr [last] minmax(
-        120px,
-        1fr
-      );
-  }
-
-  .mat-header-row {
-    border-bottom: 1px solid $colorGrayWhite;
-    margin-bottom: 10px;
-  }
-
-  .text {
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    color: $colorGrayWhite;
-    font-size: 14rem;
-    @include transitionMove();
-
-    .link {
-      position: relative;
-      color: $colorGrayWhite;
-
-      &:hover {
-        color: $colorWhite;
-        text-decoration: underline;
-      }
-    }
-  }
-
-  .numberWrapper {
-    position: relative;
-
-    .playSong {
-      position: absolute;
-      content: "";
-      top: 50%;
-      left: 50%;
-      width: 24px;
-      height: 24px;
-      transform: translate(-50%, -50%);
-      opacity: 0;
-      visibility: hidden;
-      background-color: transparent;
-      border: none;
-      @include transitionMove();
-    }
-  }
-
-  .number {
-    text-align: center;
-  }
-
-  .songName {
-    color: $colorWhite;
-  }
-
-  .mat-row {
-    margin: 5px 0;
-    border-radius: 5px;
-    @include transitionMove();
-
-    &:hover {
-      background-color: rgba(179, 179, 179, 0.4);
-      @include transitionMove();
-
-      * {
-        color: $colorWhite;
-      }
-
-      .playSong {
-        opacity: 1;
-        visibility: visible;
-        @include transitionMove();
-      }
-
-      .number {
-        opacity: 0;
-      }
-
-      .trackLike {
-        opacity: 1;
-        visibility: visible;
-        @include transitionMove();
-    }
-    }
-  }
-
-  .mat-cell,
-  .mat-header-cell {
-    padding: 0;
-    border: none;
-  }
-
-  .mat-header-cell {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    color: $colorGrayWhite;
-    font-size: 14rem;
-
-    &:first-child {
-      justify-content: center;
-    }
-  }
-
-  .mat-cell {
-    border: none;
-  }
-
-  .titleWrapper {
-    display: flex;
-    align-items: center;
-
-    .pic {
-      display: block;
-      width: 40px;
-      height: 40px;
-      margin-right: 20px;
-    }
-  }
-
-  .columnWrapper {
-      display: flex;
-      align-items: center;
-
-      .trackLike {
-          cursor: pointer;
-          background-color: transparent;
-          border: none;
-          opacity: 0;
-          visibility: hidden;
-          @include transitionMove();
-
-          ::ng-deep {
-              svg {
-                  max-width: 20px;
-                  margin-right: 5px;
-                  path {
-                    fill: $colorWhite;
-                }
-              }
-
-              
-          }
-      }
-  }
-}
-
-.artistsList {
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-
-  &__item {
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-
-    &::after {
-      display: inline-block;
-      content: ",";
-      margin-right: 5px;
-    }
-
-    &:last-child {
-      &::after {
-        content: none;
-      }
-    }
-  }
-
-  &__link {
-    position: relative;
-    color: $colorGrayWhite;
-
-    &:hover {
-      color: $colorWhite;
-      text-decoration: underline;
-    }
-  }
-}
-
 .playlistActions {
   display: flex;
   align-items: center;
@@ -407,6 +213,170 @@
       path {
         fill: $colorGrayWhite;
         @include transitionMove();
+      }
+    }
+  }
+}
+
+.tracksTable {
+  background-color: transparent;
+
+  .mat-row,
+  .mat-header-row {
+    display: grid;
+    align-items: center;
+    grid-gap: 16px;
+    padding: 0 16px;
+    grid-template-columns: [index] 24px [first] 8fr [last] minmax(120px, 1fr);
+  }
+
+  .mat-header-row {
+    border-bottom: 1px solid $colorGrayWhite;
+    margin-bottom: 10px;
+  }
+
+  .text {
+    color: $colorGrayWhite;
+    font-size: 14rem;
+    @include transitionMove();
+
+    .link {
+      position: relative;
+      color: $colorGrayWhite;
+
+      &:hover {
+        color: $colorWhite;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .numberWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .playSong {
+      position: absolute;
+      content: "";
+      top: 50%;
+      left: 50%;
+      width: 24px;
+      height: 24px;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      visibility: hidden;
+      background-color: transparent;
+      border: none;
+      @include transitionMove();
+    }
+  }
+
+  .number {
+    display: inline-block;
+    text-align: center;
+  }
+
+  .songName {
+    color: $colorWhite;
+  }
+
+  .artist {
+    position: relative;
+    display: inline-block;
+    @include underlineAdd($colorWhite, 0);
+  }
+
+  .mat-row {
+    margin: 5px 0;
+    border-radius: 5px;
+    @include transitionMove();
+
+    &:hover {
+      background-color: rgba(179, 179, 179, 0.4);
+      @include transitionMove();
+
+      * {
+        color: $colorWhite;
+      }
+
+      .playSong {
+        opacity: 1;
+        visibility: visible;
+        @include transitionMove();
+      }
+
+      .number {
+        opacity: 0;
+      }
+
+      .trackLike {
+        opacity: 1;
+        visibility: visible;
+        @include transitionMove();
+      }
+    }
+  }
+
+  .mat-cell,
+  .mat-header-cell {
+    padding: 0;
+    border: none;
+  }
+
+  .mat-header-cell {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: $colorGrayWhite;
+    font-size: 14rem;
+
+    &:first-child {
+      justify-content: center;
+    }
+
+    &.mat-column-duration {
+      justify-content: center;
+    }
+  }
+
+  .mat-cell {
+    border: none;
+  }
+
+  .titleWrapper {
+    display: flex;
+    align-items: center;
+
+    .pic {
+      display: block;
+      width: 40px;
+      height: 40px;
+      margin-right: 20px;
+    }
+  }
+
+  .columnWrapper {
+    display: flex;
+    align-items: center;
+
+    .trackLike {
+      cursor: pointer;
+      background-color: transparent;
+      border: none;
+      opacity: 0;
+      visibility: hidden;
+      @include transitionMove();
+
+      ::ng-deep {
+        svg {
+          max-width: 20px;
+          margin-right: 5px;
+          path {
+            fill: $colorWhite;
+          }
+        }
       }
     }
   }

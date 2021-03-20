@@ -8,8 +8,7 @@ import { AuthTokenService } from './spotify.service';
 })
 export class ApiService {
   apiUrl: string = 'https://api.spotify.com/v1';
-  client_id = 'cf6854fe87b6471e8c5dc3ac3e0dfd56';
-  client_secret = 'b20c7daf47984966bc52cd609371f55b';
+  accessToken;
 
   constructor(
     private http: HttpClient,
@@ -19,24 +18,24 @@ export class ApiService {
   private getHeaders(force: boolean): Promise<HttpHeaders> {
     return Promise.resolve(
       this.authTokenService.authenticate(force).then((res) => {
+        this.accessToken = res;
         return Promise.resolve(
           new HttpHeaders()
             .set('Content-Type', 'application/json')
-            .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${res}`)
+            .set('Authorization', `Bearer ${this.accessToken}`)
         );
       })
     );
   }
 
-  public put(url: string) {
-    return this.internalPut(url, 1);
+  public delete(url: string) {
+    return this.internalDelete(url, 1);
   }
 
-  private internalPut(url: string, tryNum: number) {
+  private internalDelete(url: string, tryNum: number) {
     return this.getHeaders(false).then(headers => {
       return this.http
-        .put(this.apiUrl + url, {headers: headers})
+        .delete(this.apiUrl + url, {headers: headers})
         .pipe(
           tap(
             (data) => {
@@ -46,7 +45,7 @@ export class ApiService {
               if(error.status == 401) {
                 return this.getHeaders(true).then(res => {
                   if(tryNum < 5) {
-                    return this.internalPut(url, tryNum + 1);
+                    return this.internalDelete(url,  tryNum + 1);
                   }
                 });
               }
@@ -55,7 +54,36 @@ export class ApiService {
           )
         )
         .toPromise();
-      })
+          });
+  }
+
+  public put(url: string, data: any) {
+    return this.internalPut(url, data, 1);
+  }
+
+  private internalPut(url: string, data: any, tryNum: number) {
+    return this.getHeaders(false).then(headers => {
+      return this.http
+        .put(this.apiUrl + url, {ids:data}, {headers: headers})
+        .pipe(
+          tap(
+            (data) => {
+              return Promise.resolve(data);
+            },
+            (error) => {
+              if(error.status == 401) {
+                return this.getHeaders(true).then(res => {
+                  if(tryNum < 5) {
+                    return this.internalPut(url,data, tryNum + 1);
+                  }
+                });
+              }
+              return Promise.reject();
+            }
+          )
+        )
+        .toPromise();
+          });
   }
 
   public post(url: string, data: any) {
@@ -101,7 +129,7 @@ export class ApiService {
               return Promise.resolve(data);
             },
             (error) => {
-              if(error.statusCode == 401) {
+              if(error.status == 401) {
                 return this.getHeaders(true).then(res => {
                   if(tryNum < 5) {
                     return this.internalGet(url, tryNum + 1);

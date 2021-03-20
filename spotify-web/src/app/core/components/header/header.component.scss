@@ -1,95 +1,122 @@
 @import "../../../../assets/styles/variables.scss";
 
 .headerSection {
-    position: fixed;
-    top: 0;
-    left: 230px;
-    right: 0;
-    background-color: rgba(0,0,0,0.5);
-    z-index: 9;
+  position: fixed;
+  top: 0;
+  left: 230px;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9;
 
-    .containerFluid {
-        display: flex;
-        padding: 16px 32px;
+  .containerFluid {
+    display: flex;
+    align-items: center;
+    padding: 16px 32px;
+  }
+
+  .rightBlock {
+    margin-left: auto;
+  }
+
+  .leftBlock {
+    display: flex;
+    align-items: center;
+    margin-right: auto;
+  }
+
+  .searchWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin-left: 10px;
+    max-width: 300px;
+    width: 100%;
+
+    svg {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
     }
 
-    .rightBlock {
-        margin-left: auto;
+    .searchBar {
+      padding: 10px 40px;
+      font-size: 14rem;
+      background-color: $colorWhite;
+      border-radius: 20px;
+      outline: none;
+      border: none;
     }
+  }
 
-    .leftBlock {
-        margin-right: auto;
-    }
+  .btnActions {
+    display: flex;
+    align-items: center;
 
-    .btnActions {
-        display: flex;
-        align-items: center;
+    &__actionBtn {
+      position: relative;
+      width: 30px;
+      height: 30px;
+      margin-right: 20px;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.5);
 
-        &__actionBtn {
-            position: relative;
-            width: 30px;
-            height: 30px;
-            margin-right: 20px;
-            border-radius: 50%;
-            background-color: rgba(0,0,0,0.5);
+      &:last-child {
+        margin-right: 0;
+      }
 
-            &:last-child {
-                margin-right: 0;
-            }
+      &::before {
+        position: absolute;
+        content: "";
+        top: 50%;
+        left: 50%;
+        width: 10px;
+        height: 10px;
+        border-left: 1px solid $colorGrayWhite;
+        border-top: 1px solid $colorGrayWhite;
+        transform-origin: top left;
+      }
 
-            &::before {
-                position: absolute;
-                content: '';
-                top: 50%;
-                left: 50%;
-                width: 10px;
-                height: 10px;
-                border-left: 1px solid $colorGrayWhite;
-                border-top: 1px solid $colorGrayWhite;
-                transform-origin: top left;
-            }
-
-            &.prev {
-                &::before {
-                    transform: rotate(-45deg) translate(-50%, -50%);
-                }
-            }
-
-            &.next {
-                &::before {
-                    transform: rotate(135deg) translate(-50%, -50%);
-                }
-            }
+      &.prev {
+        &::before {
+          transform: rotate(-45deg) translate(-50%, -50%);
         }
-    }
+      }
 
-    .loginActions {
-        display: flex;
-        align-items: center;
-
-        &__link {
-            display: inline-block;
-            font: 12rem $fontBold;
-            padding: 10px 40px;
-            border-radius: 20px;
-            @include transitionMove();
-
-            &:hover {
-                transform: scale(1.1);
-                @include transitionMove();
-            }
-
-            &.login {
-                background-color: $colorWhite;
-                color: $mainBgBlack;
-            }
-
-            &.signUp {
-                background-color: transparent;
-                color: $colorWhite;
-            }
+      &.next {
+        &::before {
+          transform: rotate(135deg) translate(-50%, -50%);
         }
+      }
     }
+  }
 
+  .loginActions {
+    display: flex;
+    align-items: center;
 
+    &__link {
+      display: inline-block;
+      font: 12rem $fontBold;
+      padding: 10px 40px;
+      border-radius: 20px;
+      @include transitionMove();
+
+      &:hover {
+        transform: scale(1.1);
+        @include transitionMove();
+      }
+
+      &.login {
+        background-color: $colorWhite;
+        color: $mainBgBlack;
+      }
+
+      &.signUp {
+        background-color: transparent;
+        color: $colorWhite;
+      }
+    }
+  }
 }

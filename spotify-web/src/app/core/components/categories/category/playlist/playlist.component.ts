@@ -27,7 +27,6 @@ export class PlaylistComponent implements OnInit {
     'dateAdded',
     'duration',
   ];
-  dataSource;
 
   ngOnInit(): void {
     this.apiService
@@ -49,14 +48,20 @@ export class PlaylistComponent implements OnInit {
         this.durationHr = this.playlistServiceService.convertMsToHours(true, this.durationMs);
       });
   }
+  
+  likeTrack(tracksId) {
+    this.apiService
+    .put(`/me/tracks?ids=${tracksId}`, tracksId)
+    .then((res: any) => {
+      console.log(res);
+    });
+  }
 
   likeTracks(tracksId) {
     // this.apiService
-    // .put(`/me/albums?ids=${tracksId}`)
+    // .post(`/playlists/${tracksId}/tracks`, {})
     // .then((res: any) => {
     //   console.log(res);
     // });
   }
-
-  
 }

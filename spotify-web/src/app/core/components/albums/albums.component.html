@@ -22,18 +22,17 @@
             class="link"
             *ngIf="
               playlistData &&
-              playlistData.owner &&
-              playlistData.owner.external_urls
+              playlistData.artists &&
+              playlistData.artists.length
             "
-            href="{{ playlistData.owner.external_urls.spotify }}"
+            href="{{ playlistData.artists[0].href }}"
           >
-            {{ playlistData.owner.display_name }}
+            {{ playlistData.artists[0].name }}
           </a>
           <span class="likes dot">
-            {{ playlistData.followers.total.toLocaleString() }} likes
+            {{ playlistData.total_tracks }} Songs,
           </span>
           <span class="totalAndTime dot">
-            {{ playlistData.tracks.total }} songs,
             {{ durationHr }}
           </span>
         </div>
@@ -51,16 +50,42 @@
         </button>
       </div>
       <div class="likeContainer actionBtn">
-        <button class="likeContainer__btn" (click)="likeTracks(playlistData.id)">
-            <app-svg [svgName]="'likeBtn'"></app-svg>
+        <button
+          class="likeContainer__btn"
+          (click)="likeTracks(playlistData.id)"
+        >
+          <app-svg [svgName]="'likeBtn'"></app-svg>
         </button>
       </div>
       <div class="shareContainer actionBtn">
         <button class="shareContainer__btn">
-            <app-svg [svgName]="'shareBtn'"></app-svg>
+          <app-svg [svgName]="'shareBtn'"></app-svg>
         </button>
       </div>
     </div>
+    <!-- <ul class="tracksList">
+      <li
+        class="tracksList__item"
+        *ngFor="let track of playlistDataTracks; index as i"
+      >
+        <div class="tracksList__link" (click)="goToPlaylist(track.id)">
+          <div class="playBtnContainer">
+            <button class="tracksList__playBtn">
+              <span class="triangle"></span>
+            </button>
+          </div>
+
+          <div class="tracksList__content">
+            <h3 class="tracksList__topic">{{ track.name }}</h3>
+            <a [routerLink]="['/']" class="tracksList__description">
+                
+                {{ track?.artists[0]?.name }}
+            </a>
+          </div>
+        </div>
+      </li>
+    </ul> -->
+
     <table mat-table [dataSource]="playlistDataTracks" class="tracksTable">
       <ng-container matColumnDef="number">
         <th mat-header-cell *matHeaderCellDef>#</th>
@@ -80,61 +105,27 @@
         <th mat-header-cell *matHeaderCellDef>TITLE</th>
         <td mat-cell *matCellDef="let song">
           <div class="titleWrapper">
-            <img
-              class="pic"
-              src="{{ song.track.album.images[2].url }}"
-              alt=""
-            />
             <div class="innerText">
-              <div class="songName text">{{ song.track.name }}</div>
-              <div class="artist text">
-                <div class="artistsList">
-                  <span
-                    class="artistsList__item"
-                    *ngFor="let artist of song.track.artists"
-                  >
-                    <a
-                      class="artistsList__link"
-                      [routerLink]="['/artist/' + artist.id]"
-                      >{{ artist.name }}</a
-                    >
-                  </span>
-                </div>
-              </div>
+              <div class="songName text">{{ song.name }}</div>
+              <a [routerLink]="['/']" class="artist text">
+                {{ song?.artists[0]?.name }}
+              </a>
             </div>
           </div>
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="album">
-        <th mat-header-cell *matHeaderCellDef>ALBUM</th>
-        <td mat-cell *matCellDef="let song">
-          <span class="text"
-            ><a class="link" [routerLink]="['/album/' + song.track.album.id]">{{
-              song.track.album.name
-            }}</a></span
-          >
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="dateAdded">
-        <th mat-header-cell *matHeaderCellDef>DATE ADDED</th>
-        <td mat-cell *matCellDef="let song">
-          <span class="text">{{ song.addedAt }}</span>
-        </td>
-      </ng-container>
-
       <ng-container matColumnDef="duration">
         <th mat-header-cell *matHeaderCellDef>
-            <app-svg [svgName]="'duration'"></app-svg>
+          <app-svg [svgName]="'duration'"></app-svg>
         </th>
         <td mat-cell *matCellDef="let song">
-            <div class="columnWrapper">
-                <button  class="trackLike" (click)="likeTrack(playlistData.id)">
-                    <app-svg [svgName]="'likeBtn'"></app-svg>
-                </button>
-                <span class="text">{{ song.track.duration_Time }} </span>
-            </div>
+          <div class="columnWrapper">
+            <button class="trackLike" (click)="likeTrack(playlistData.id)">
+              <app-svg [svgName]="'likeBtn'"></app-svg>
+            </button>
+            <span class="text">{{ song.duration_Time }} </span>
+          </div>
         </td>
       </ng-container>
 

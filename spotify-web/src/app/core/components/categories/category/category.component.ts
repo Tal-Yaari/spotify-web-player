@@ -32,13 +32,13 @@ export class CategoryComponent implements OnInit {
           },
           (error) => {
             if (error.statusCode == 404) {
-              this.router.navigateByUrl('/categories');
+              this.router.navigateByUrl('/home');
             }
           })
       },
       (error) => {
         if (error && error.status == 404) {
-          this.router.navigateByUrl('/categories');
+          this.router.navigateByUrl('/home');
         }
       });
   }

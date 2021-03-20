@@ -5,6 +5,12 @@ export interface Categories {
   icons: Icon[];
 }
 
+export interface FilterTypes {
+  albums?: Album;
+  playlists?: Playlist;
+  tracks?: FilterTracks;
+}
+
 export interface Icon {
   height: number;
   url: string;
@@ -19,7 +25,7 @@ export interface Playlist {
   id: string;
   images: PlaylistImages[];
   name: string;
-  owner:Owner;
+  owner: Owner;
   primary_color: string;
   public: string;
   snapshot_id: string;
@@ -30,12 +36,11 @@ export interface Playlist {
 
 export interface Owner {
   display_name: string;
-    external_urls: ExternalUrls;
-    href: string;
-    id: string;
-    type: string;
+  external_urls: ExternalUrls;
+  href: string;
+  id: string;
+  type: string;
 }
-
 
 export interface PlaylistImages {
   height: number;
@@ -49,6 +54,12 @@ export interface Tracks {
   items?: TracksArr[];
 }
 
+export interface FilterTracks {
+  href: string;
+  total: number;
+  items?: Track[];
+}
+
 export interface TracksArr {
   added_at: Date;
   addedAt?: string;
@@ -60,27 +71,29 @@ export interface TracksArr {
     uri: string;
   };
   is_local: boolean;
-  track: {
-    album: Album;
-    artists: Artist[];
-    available_markets: Array<string>;
-    disc_number: number;
-    duration_ms: number;
-    duration_Time?: string;
-    explicit: boolean;
-    external_ids: {
-      isrc: string;
-    };
-    external_urls: ExternalUrls;
-    href: string;
-    id: string;
-    name: string;
-    popularity: number;
-    preview_url: string;
-    track_number: number;
-    type: string;
-    uri: string;
+  track: Track;
+}
+
+export interface Track {
+  album: Album;
+  artists: Artist[];
+  available_markets: Array<string>;
+  disc_number: number;
+  duration_ms: number;
+  duration_Time?: string;
+  explicit: boolean;
+  external_ids: {
+    isrc: string;
   };
+  external_urls: ExternalUrls;
+  href: string;
+  id: string;
+  name: string;
+  popularity: number;
+  preview_url: string;
+  track_number: number;
+  type: string;
+  uri: string;
 }
 
 export interface Album {
@@ -112,4 +125,21 @@ export interface Images {
 
 export interface ExternalUrls {
   spotify: string;
+}
+
+export interface Album {
+  artists: Artist[];
+  available_markets: Array<string>;
+  disc_number: number;
+  duration_ms: number;
+  explicit: false;
+  external_urls: ExternalUrls;
+  href: string;
+  id: string;
+  is_local: false;
+  name: string;
+  preview_url: string;
+  track_number: 1;
+  type: string;
+  uri: string;
 }
